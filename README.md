@@ -1,9 +1,7 @@
-# This is a mess you can see it under this [PR](https://github.com/BenjoGreeno/oidc-oh-I-do-see/pull/1).
+# This is a mess.
 
 This is regrettably a mess/sub par/a work in progress. I'm messing with terraform and github actions, building a basic front end that is supposed to speak to a back end. The front end is live and with Cloudfront (hurray), however I don't have much experience in calling API's, much to my detriment.
 
-
-Nothing is laid out gracefully, you can read the PR ([here](https://github.com/BenjoGreeno/oidc-oh-I-do-see/pull/1)) to see my notes on everything that's terrible, 
 
 however you're morbidly curious and want to run this, please continue reading...
 
@@ -16,6 +14,7 @@ there are various defaults that you will need to change in variables.tf
 - I also added some basic details for the global tags, again these are in variables.tf
 
 ---------------------------------------
+the poorly done things
 
 
 The OK-sh things, security wise -
@@ -31,3 +30,11 @@ Once I figure out how the front end back ends talk to one another (probably an s
 - Sort out building images and updating the task definition with Github actions
 - Sort out the checkov vulns/advisories
 - Sort out some proper testing in the pipeline.
+
+References - I've used a bunch of resources online as I waded through the ask. I definitely feel pretty defeated, regrettably.
+
+[Nextgeneerz](https://github.com/nexgeneerz/aws-scenario-ecs-ec2/tree/main)
+[Dev.tO](https://dev.to/)
+[spacelift.io](https://spacelift.io/)
+
+And many more.

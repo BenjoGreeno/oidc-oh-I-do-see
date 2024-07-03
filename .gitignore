@@ -7,6 +7,7 @@
 venv
 # testing
 /coverage
+/infrastructure/.terraform
 
 # production
 /build

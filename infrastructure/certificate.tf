@@ -22,11 +22,6 @@ create_before_destroy = true
 }
 }
 
-# data "aws_route53_zone" "domain_cloudfront" {
-#   name         = var.domain_cloudfront
-#   private_zone = false
-# }
-
 resource "aws_route53_record" "cert-validation-cloudfront" {
   for_each = {
     for d in aws_acm_certificate.wildcard-cloudfront.domain_validation_options : d.domain_name => {

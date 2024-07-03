@@ -4,7 +4,7 @@
 # }
 
 resource "aws_cloudfront_origin_access_control" "testApp01" {
-  name                              = "testApp01"
+  name                              = "${var.app-stack}"
   description                       = "Access KMS encrypted S3"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
@@ -12,7 +12,7 @@ resource "aws_cloudfront_origin_access_control" "testApp01" {
 }
 
 locals {
-  s3_origin_id = "testApp01-s3origin"
+  s3_origin_id = "${var.app-stack}-s3origin"
 }
 
 resource "random_password" "custom_header" {
@@ -34,27 +34,12 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     origin_id   = local.s3_origin_id
     origin_path = "/site-content"
     origin_access_control_id = aws_cloudfront_origin_access_control.testApp01.id
-
-    # custom_header {
-    #   name  = "Referer"
-    #   value = random_password.custom_header.result
-    # }
-    # custom_origin_config {
-    #   http_port                = 80
-    #   https_port               = 443
-    #   origin_keepalive_timeout = 5
-    #   origin_protocol_policy   = "http-only"
-    #   origin_read_timeout      = 30
-    #   origin_ssl_protocols = [
-    #     "TLSv1.2",
-    #   ]
-    # }
   }
 
   aliases = ["${var.domain_cloudfront}", "www.${var.domain_cloudfront}"]
 
   enabled = true
-  comment = "testApp01 CDN"
+  comment = "${var.app-stack} CDN"
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]

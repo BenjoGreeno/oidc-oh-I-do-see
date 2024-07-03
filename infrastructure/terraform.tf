@@ -10,9 +10,9 @@ terraform {
 provider "aws" {
   default_tags {
     tags = {
-      Owner      = "Ben"
-      OwnerEmail = "iamben84@gmail.com"
-      AppStackID = "testApp01"
+      Owner      = "${var.owner}"
+      OwnerEmail = "${var.owner-email}"
+      AppStackID = "${var.app-stack}"
     }
   }
 }

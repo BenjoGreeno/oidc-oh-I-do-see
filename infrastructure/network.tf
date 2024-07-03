@@ -1,5 +1,5 @@
 resource "aws_vpc" "testApp01-vpc" {
-  cidr_block = var.vpc_cidr
+  cidr_block = var.vpc_cidr_block
   
 }
 
@@ -21,7 +21,6 @@ resource "aws_default_security_group" "default" {
     cidr_blocks = ["0.0.0.0/0"]
  }
 }
-
 
   resource "aws_subnet" "public" {
   count                   = var.az_count
@@ -67,33 +66,18 @@ resource "aws_security_group_rule" "alb_cloudfront_https_ingress_only" {
   type              = "ingress"
 }
 
- resource "aws_security_group_rule" "home-IP-ingress" {
-  security_group_id = aws_security_group.lb_sg.id
-  description       = "Allow HTTPS access only from CloudFront CIDR blocks"
-  from_port         = 443
-  protocol          = "tcp"
-  to_port           = 443
-  type              = "ingress"
-  cidr_blocks =  ["82.3.43.180/32"]
-}
-
 resource "aws_security_group" "ecs_sg" {
   name_prefix = "ecs-sg"
   vpc_id      = aws_vpc.testApp01-vpc.id
 
   ingress {
-    from_port   = var.api_port
-    to_port     = var.api_port
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    description     = "Allow ingress traffic from ALB to ECS"
+    from_port       = 8000
+    to_port         = 8000
+    protocol        = "tcp"
+    security_groups = [aws_security_group.lb_sg.id]
   }
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 }
 
 resource "aws_internet_gateway" "internet-gw" {
@@ -120,7 +104,7 @@ resource "aws_nat_gateway" "nat_gateway" {
   allocation_id = aws_eip.nat_gateway[count.index].id
 
   tags = {
-    Name = "${var.namespace}_NATGateway_${count.index}_${var.environment}"
+    Name = "${var.app-stack}_NATGateway_${count.index}_${var.environment}"
   }
 }
 

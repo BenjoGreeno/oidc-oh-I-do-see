@@ -4,15 +4,6 @@ resource "aws_kms_key" "kms-fors3-encrypt" {
   enable_key_rotation = true
 }
 
-# resource "aws_kms_grant" "cloudfront-grant" {
-#   name              = "my-grant"
-#   key_id            = aws_kms_key.kms-fors3-encrypt.key_id
-#   grantee_principal = aws_cloudfront_distribution.s3_distribution.arn
-#   operations        = ["Encrypt", "Decrypt", "GenerateDataKey"]
-#   depends_on        = [aws_cloudfront_distribution.s3_distribution]
-# }
-
-
 resource "aws_kms_key_policy" "cloudfront-grant" {
   key_id = aws_kms_key.kms-fors3-encrypt.key_id
   depends_on = [ aws_cloudfront_distribution.s3_distribution ]
@@ -53,7 +44,7 @@ resource "aws_kms_key_policy" "cloudfront-grant" {
 }
 EOF
 }
-# The bucket name matches the domain we're sticking on the CDC
+# The bucket name matches the domain we're sticking on the CDN
 resource "aws_s3_bucket" "testApp01-bucket" {
   bucket = var.domain_cloudfront 
 }
@@ -69,7 +60,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "s3-sse-encrypt" {
   }
 }
 
-# add bucket policy to let the CloudFront OAI get objects:
+
 resource "aws_s3_bucket_policy" "bucket_policy" {
   bucket = aws_s3_bucket.testApp01-bucket.id
   policy = data.aws_iam_policy_document.bucket_policy.json

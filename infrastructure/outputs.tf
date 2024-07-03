@@ -1,5 +1,5 @@
 output "ecs_cluster_id" {
-  value = aws_ecs_cluster.example.id
+  value = aws_ecs_cluster.testApp01.id
 }
 
 output "ecs_service_name" {

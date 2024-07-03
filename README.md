@@ -1,9 +1,16 @@
 # This is a mess.
 
-This is regrettably a mess/sub par/a work in progress. I'm messing with terraform and github actions, building a basic front end that is supposed to speak to a back end. The front end is live and with Cloudfront (hurray), however I don't have much experience in calling API's, much to my detriment.
+This is regrettably a mess/sub par/a work in progress. I'm messing with terraform and github actions, building a basic front end that is supposed to speak to a back end. The front end is live and with Cloudfront (hurray), however I don't have much experience in calling API's, much to my detriment. He's some detail
 
+- front end with Cloudfront is sorted, but it's not set to call anything in the back end.
+- All the networking stuff is deployed- VPC, subnets, SG's etc etc
+- I've set up the ECS cluster and service, but my sample app isn't reachable, this is going to be something daft as it's a 504.
+- No modules set up, which I was wanting to do to split the account types (Dev, QA, prod)
+- I'll crack on with documentation
+- No logging / observability
+- I've started on the pipeline, but just added checkov as a github actions stage. I've set up OIDC for authentication
 
-however you're morbidly curious and want to run this, please continue reading...
+if you're morbidly curious and want to run this, please continue reading...
 
 As this is just me, I"ve kept the Terraform backend local, so you'll need to have your aws credentials set up as per the 'aws configure' command. I have terraform cloud sert up and authenticated with OIDC (which I'll pipeline with Github Actions).
 
@@ -14,7 +21,6 @@ there are various defaults that you will need to change in variables.tf
 - I also added some basic details for the global tags, again these are in variables.tf
 
 ---------------------------------------
-the poorly done things
 
 
 The OK-sh things, security wise -

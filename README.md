@@ -37,4 +37,4 @@ References - I've used a bunch of resources online as I waded through the ask. I
 [Dev.tO](https://dev.to/)
 [spacelift.io](https://spacelift.io/)
 
-And many more.
+and no doubt many more, but the above were really useful (besides the terraform site)

@@ -31,4 +31,3 @@ Once I figure out how the front end back ends talk to one another (probably an s
 - Sort out building images and updating the task definition with Github actions
 - Sort out the checkov vulns/advisories
 - Sort out some proper testing in the pipeline.
-

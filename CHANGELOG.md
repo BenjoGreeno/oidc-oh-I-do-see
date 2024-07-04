@@ -12,3 +12,4 @@ Terraform instructions for a bunch of stuff create, such as
 - network side of things set up - VPC, SG's private & public subnets with their corresponding routes.
 - ECS cluster & service - I've not got sorted method of authenticating and uploading to ECR yet.
 - Certificates and domains to go in front of the lb and cloudfront distribution.
+

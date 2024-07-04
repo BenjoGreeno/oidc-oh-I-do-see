@@ -66,6 +66,17 @@ resource "aws_security_group_rule" "alb_cloudfront_https_ingress_only" {
   type              = "ingress"
 }
 
+resource "aws_security_group_rule" "alb_cloudfront_egress_to_ecs" {
+  security_group_id = aws_security_group.lb_sg.id
+  description       = "Egress elb to the ecs/ec2 host"
+  from_port         = 8000
+  protocol          = "tcp"
+  to_port           = 8000
+  type              = "egress"
+  source_security_group_id = aws_security_group.ecs_sg.id
+}
+
+
 resource "aws_security_group" "ecs_sg" {
   name_prefix = "ecs-sg"
   vpc_id      = aws_vpc.testApp01-vpc.id

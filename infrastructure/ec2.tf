@@ -32,7 +32,7 @@ resource "aws_launch_template" "ecs_instance" {
 
   network_interfaces {
     device_index          = 0
-    associate_public_ip_address = true
+    associate_public_ip_address = flase
     security_groups       = [aws_security_group.ecs_sg.id]
   }
 

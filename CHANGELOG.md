@@ -3,6 +3,7 @@
 ### 2024-07-03
 - some tidy up
 - added versioning to the bucket
+- some work on the SG comms between the lb and ecs.
 
 ### 2024-07-03
 **First draft and a bit of a frankenstein of stuff, this is no oil painting and needs a lot of work.**

@@ -12,7 +12,13 @@ This is regrettably a mess/sub par/a work in progress. I'm messing with terrafor
 
 if you're morbidly curious and want to run this, please continue reading...
 
-As this is just me, I"ve kept the Terraform backend local, so you'll need to have your aws credentials set up as per the 'aws configure' command. I have terraform cloud sert up and authenticated with OIDC (which I'll pipeline with Github Actions).
+from the infrastructure folder, run the following:
+
+terraform init
+terraform plan (if you want to see what it's intention is)
+terraform apply (--auto-approve if you feel spicy)
+
+As this is just me, I"ve kept the Terraform backend local, so you'll need to have your aws credentials set up as per the 'aws configure' command. I have terraform cloud set up and authenticated with OIDC (which I'll pipeline with Github Actions).
 
 there are various defaults that you will need to change in variables.tf
 

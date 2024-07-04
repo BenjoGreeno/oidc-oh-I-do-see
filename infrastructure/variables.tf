@@ -33,17 +33,18 @@ variable "app-stack" {
 }
 
 variable "hosted_zone" {
+description = this assumes you have a hosted zone set up, please provide it"
   type    = string
-  default = "bengreen.xyz"
 }
 
 variable "domain_cloudfront" {
+description = "this will try and create an A record under the specified hosted zone"
   type    = string
   default = "hello-from.bengreen.xyz"
 }
 
 variable "domain_alb" {
-  description = "To point to the load balancer"
+  description = "this will try and create an A record under the specified hosted zone"
   type        = string
   default     = "backend.bengreen.xyz"
 }

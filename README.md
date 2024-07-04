@@ -1,6 +1,6 @@
 # This is a mess.
 
-This is regrettably a mess/sub par/a work in progress. I'm messing with terraform and github actions, building a basic front end that is supposed to speak to a back end. The front end is live and with Cloudfront (hurray), however I don't have much experience in calling API's, much to my detriment. He's some detail
+This is regrettably a mess/sub par/a work in progress. I'm messing with terraform and github actions, building a basic front end that is supposed to speak to a back end. The front end deploys and with Cloudfront (hurray), however I don't have much experience in calling API's, much to my detriment. He's some detail
 
 - front end with Cloudfront is sorted, but it's not set to call anything in the back end.
 - All the networking stuff is deployed- VPC, subnets, SG's etc etc

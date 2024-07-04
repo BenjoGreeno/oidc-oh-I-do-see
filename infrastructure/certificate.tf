@@ -43,12 +43,7 @@ resource "aws_acm_certificate_validation" "cert-validation-cloudfront" {
   validation_record_fqdns = [for r in aws_route53_record.cert-validation-cloudfront : r.fqdn]
 }
 
-##################################Load Balancer ########################################
-
-# data "aws_route53_zone" "hosted_zone" {
-#   name = var.domain_cloudfront
-#   private_zone = false
-# }
+##################################Load Balancer Cert ########################################
 
 resource "aws_acm_certificate" "wildcard-lb" {
   domain_name               = var.domain_alb
@@ -96,12 +91,7 @@ resource "aws_acm_certificate_validation" "cert-validation-alb" {
 #   ttl             = 60
 #   type            = each.value.type
 #   zone_id         = data.aws_route53_zone.hosted_zone.zone_id
-# }
-# resource "aws_acm_certificate_validation" "cert-validation" {
-#   provider                = aws.cdn
-#   certificate_arn         = aws_acm_certificate.bengreen-cert.arn
-#   validation_record_fqdns = [for r in aws_route53_record.cert-validation : r.fqdn]
-# }
+
 # Point records to their alias endpoints:
 resource "aws_route53_record" "cloudfront-domain" {
   name    = var.domain_cloudfront

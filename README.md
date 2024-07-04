@@ -49,7 +49,7 @@ Once I figure out how the front end back ends talk to one another (probably an s
 - Sort out the checkov vulns/advisories
 - Sort out some proper testing in the pipeline.
 
-References - I've used a bunch of resources online as I waded through the ask. I definitely feel pretty defeated, regrettably.
+References - I've used a bunch of resources online as I waded through the ask. I definitely feel temporarily pretty defeated, regrettably.
 
 [Nextgeneerz](https://github.com/nexgeneerz/aws-scenario-ecs-ec2/tree/main)
 [Dev.tO](https://dev.to/)

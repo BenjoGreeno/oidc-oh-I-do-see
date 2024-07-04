@@ -49,6 +49,14 @@ resource "aws_s3_bucket" "testApp01-bucket" {
   bucket = var.domain_cloudfront 
 }
 
+
+resource "aws_s3_bucket_versioning" "versioning_example" {
+  bucket = aws_s3_bucket.testApp01-bucket.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
 resource "aws_s3_bucket_server_side_encryption_configuration" "s3-sse-encrypt" {
   bucket = aws_s3_bucket.testApp01-bucket.id
 

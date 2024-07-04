@@ -10,6 +10,7 @@ This is regrettably a mess/sub par/a work in progress. I'm messing with terrafor
 - No logging / observability
 - I've started on the pipeline, but just added checkov as a github actions stage. I've set up OIDC for authentication
 
+### Some steps
 if you're morbidly curious and want to run this, please continue reading...
 
 from the infrastructure folder, run the following:
@@ -25,19 +26,24 @@ there are various defaults that you will need to change in variables.tf
 - I created an image locally/separately and pushed it up to ECR to test.
 - I added my own hosted zone and subdomains as defaults
 - I also added some basic details for the global tags, again these are in variables.tf
+- i've limited the Cloudfront region to the lowest one, which was UK/US, for money saving and reduction of attack surface whilst testing.
 
 ---------------------------------------
 
 
-The OK-sh things, security wise -
+### The OK-sh things, security wise -
 
 I've separated Private and Public subnets, nothing spectacular but I'm taking what I can.
 I've enabled Origin Access Control (OAC, as ooposed to legacy OAI) with regards to authenticating with the S3 origin. I set the bucket to encrypt everything with KMS-SSE - this needed a custom KMS policy and was more of a faff figuring out than anticipated.
 I made sure both the front end and the loadbalancer were covered with tls encryption against the subdomain addresses I'd set up.
 the LB was set to only receive traffic from the cloudfront range, custom headers was on my list but not yet.
 
+
+### To Do
 Once I figure out how the front end back ends talk to one another (probably an sg mishap + CORS) I'd ideally do the following in:
 
+- add a WAF
+- Add custom headers
 - Observability: get some performance metrics and set up some alarms based on cost and/or traffic
 - Sort out building images and updating the task definition with Github actions
 - Sort out the checkov vulns/advisories
@@ -49,4 +55,4 @@ References - I've used a bunch of resources online as I waded through the ask. I
 [Dev.tO](https://dev.to/)
 [spacelift.io](https://spacelift.io/)
 
-and no doubt many more, but the above were really useful (besides the terraform site)
+and no doubt many more, but the above were really useful and had a bunch of workable examples I've worked with (besides the terraform site)

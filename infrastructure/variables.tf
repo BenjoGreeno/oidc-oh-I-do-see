@@ -33,7 +33,7 @@ variable "app-stack" {
 }
 
 variable "hosted_zone" {
-description = this assumes you have a hosted zone set up, please provide it"
+description = "this assumes you have a hosted zone set up, please provide it"
   type    = string
 }
 
@@ -67,7 +67,7 @@ variable "az_count" {
   type        = number
 }
 variable "custom_origin_host_header" {
-  description = "Custom header to ensure communication only through CloudFront"
+  descriptionSillySilly = "Custom header to ensure communication only through CloudFront"
   default     = "Demo123"
   type        = string
 }

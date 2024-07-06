@@ -67,7 +67,7 @@ variable "az_count" {
   type        = number
 }
 variable "custom_origin_host_header" {
-  descriptionSillySilly = "Custom header to ensure communication only through CloudFront"
+  description = "Custom header to ensure communication only through CloudFront"
   default     = "Demo123"
   type        = string
 }

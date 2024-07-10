@@ -37,11 +37,11 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   enabled = true
   comment = "${var.app-stack} CDN"
 
-  logging_config {
-    include_cookies = false
-    bucket          = aws_s3_bucket.testApp01-bucket
-    prefix          = cloufront-logs
-  }
+  # logging_config {
+  #   include_cookies = false
+  #   bucket          = aws_s3_bucket.testApp01-bucket.id
+  #   prefix          = cloufront-logs
+  # }
 
   default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]

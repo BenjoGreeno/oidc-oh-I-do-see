@@ -1,6 +1,6 @@
 
 resource "aws_cloudfront_origin_access_control" "testApp01" {
-  name                              = "${var.app-stack}"
+  name                              = var.app-stack
   description                       = "Access KMS encrypted S3"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
@@ -23,12 +23,12 @@ resource "random_password" "custom_header" {
 }
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
-  depends_on = [ aws_cloudfront_origin_access_control.testApp01 ]
+  depends_on          = [aws_cloudfront_origin_access_control.testApp01]
   default_root_object = "index.html"
   origin {
-    domain_name = aws_s3_bucket.testApp01-bucket.bucket_regional_domain_name
-    origin_id   = local.s3_origin_id
-    origin_path = "/site-content"
+    domain_name              = aws_s3_bucket.testApp01-bucket.bucket_regional_domain_name
+    origin_id                = local.s3_origin_id
+    origin_path              = "/site-content"
     origin_access_control_id = aws_cloudfront_origin_access_control.testApp01.id
   }
 

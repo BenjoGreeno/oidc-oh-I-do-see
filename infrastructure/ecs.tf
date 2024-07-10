@@ -46,7 +46,7 @@ resource "aws_ecs_service" "api_service" {
     container_name   = var.container_name
     container_port   = var.api_port
   }
-  depends_on = [ aws_lb_listener.alb_default_listener_https ]
+  depends_on = [aws_lb_listener.alb_default_listener_https]
   network_configuration {
     subnets         = aws_subnet.private[*].id
     security_groups = [aws_security_group.ecs_sg.id]

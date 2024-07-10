@@ -1,6 +1,6 @@
 resource "aws_vpc" "testApp01-vpc" {
   cidr_block = var.vpc_cidr_block
-  
+
 }
 
 #Blocking the default security group from doing anything.
@@ -19,16 +19,16 @@ resource "aws_default_security_group" "default" {
     to_port     = 0
     protocol    = "1"
     cidr_blocks = ["0.0.0.0/0"]
- }
+  }
 }
 
-  resource "aws_subnet" "public" {
+resource "aws_subnet" "public" {
   count                   = var.az_count
   vpc_id                  = aws_vpc.testApp01-vpc.id
   cidr_block              = cidrsubnet(var.vpc_cidr_block, 4, var.az_count + count.index)
   availability_zone       = data.aws_availability_zones.available.names[count.index]
   map_public_ip_on_launch = true
-    tags = {
+  tags = {
     Name = "PublicSubnet ${count.index + 1}"
   }
 
@@ -67,12 +67,12 @@ resource "aws_security_group_rule" "alb_cloudfront_https_ingress_only" {
 }
 
 resource "aws_security_group_rule" "alb_cloudfront_egress_to_ecs" {
-  security_group_id = aws_security_group.lb_sg.id
-  description       = "Egress elb to the ecs/ec2 host"
-  from_port         = 8000
-  protocol          = "tcp"
-  to_port           = 8000
-  type              = "egress"
+  security_group_id        = aws_security_group.lb_sg.id
+  description              = "Egress elb to the ecs/ec2 host"
+  from_port                = 8000
+  protocol                 = "tcp"
+  to_port                  = 8000
+  type                     = "egress"
   source_security_group_id = aws_security_group.ecs_sg.id
 }
 

@@ -21,19 +21,19 @@ resource "aws_launch_template" "ecs_instance" {
     name = aws_iam_instance_profile.ecs_instance_profile.name
   }
 
-  image_id = data.aws_ami.ecs_ami.id
+  image_id      = data.aws_ami.ecs_ami.id
   instance_type = var.instance_type
 
   user_data = base64encode(<<-EOF
               #!/bin/bash
               echo "ECS_CLUSTER=${aws_ecs_cluster.testApp01.name}" > /etc/ecs/ecs.config
               EOF
-            )
+  )
 
   network_interfaces {
-    device_index          = 0
+    device_index                = 0
     associate_public_ip_address = false
-    security_groups       = [aws_security_group.ecs_sg.id]
+    security_groups             = [aws_security_group.ecs_sg.id]
   }
 
   tag_specifications {
@@ -45,10 +45,10 @@ resource "aws_launch_template" "ecs_instance" {
 }
 
 resource "aws_autoscaling_group" "ecs_instances" {
-  desired_capacity     = 1
-  max_size             = 2
-  min_size             = 1
-  vpc_zone_identifier  = [aws_subnet.private[0].id, aws_subnet.private[1].id]
+  desired_capacity    = 1
+  max_size            = 2
+  min_size            = 1
+  vpc_zone_identifier = [aws_subnet.private[0].id, aws_subnet.private[1].id]
 
   launch_template {
     id      = aws_launch_template.ecs_instance.id

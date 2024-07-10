@@ -1,13 +1,13 @@
 resource "aws_kms_key" "kms-fors3-encrypt" {
   description             = "Key for SSE "
   deletion_window_in_days = 10
-  enable_key_rotation = true
+  enable_key_rotation     = true
 }
 
 resource "aws_kms_key_policy" "cloudfront-grant" {
-  key_id = aws_kms_key.kms-fors3-encrypt.key_id
-  depends_on = [ aws_cloudfront_distribution.s3_distribution ]
-  policy = <<EOF
+  key_id     = aws_kms_key.kms-fors3-encrypt.key_id
+  depends_on = [aws_cloudfront_distribution.s3_distribution]
+  policy     = <<EOF
   {
     "Version": "2012-10-17",
     "Id": "key-default-1",
@@ -46,7 +46,7 @@ EOF
 }
 # The bucket name matches the domain we're sticking on the CDN
 resource "aws_s3_bucket" "testApp01-bucket" {
-  bucket = var.domain_cloudfront 
+  bucket = var.domain_cloudfront
 }
 
 

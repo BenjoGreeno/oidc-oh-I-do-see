@@ -21,3 +21,13 @@ provider "aws" {
   alias  = "cdn"
   region = "us-east-1"
 }
+
+terraform {
+  cloud {
+    organization = "benjo-learns"
+
+    workspaces {
+      name = "ECS-Mess"
+    }
+  }
+}

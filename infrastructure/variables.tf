@@ -50,6 +50,7 @@ variable "app-stack" {
 variable "hosted_zone" {
   description = "this assumes you have a hosted zone set up, please provide it"
   type        = string
+  default = bengreen.xyz
 }
 
 variable "domain_cloudfront" {

@@ -14,7 +14,11 @@ RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Install dependencies:
-RUN pip install -r requirements.txt && chmod +x serve.sh
+RUN pip install -r requirements.txt && chmod +x serve.sh \
+ && apt update \
+ && apt install -y curl
 # EXPOSE - informs Docker that the container listens on the specified network ports at runtime
 EXPOSE 5000
+HEALTHCHECK CMD curl --fail http://localhost:5000/ || exit 1
+RUN apt purge curl -y && apt-get clean -y
 ENTRYPOINT ["bash", "-C", "./serve.sh"]

@@ -11,7 +11,7 @@ resource "aws_ecs_task_definition" "api" {
 
   container_definitions = jsonencode([
     {
-      name      = "api-container"
+      name      = var.container_name
       image     = "${var.image}"
       essential = true
 
@@ -25,6 +25,15 @@ resource "aws_ecs_task_definition" "api" {
   ])
 }
 
+resource "aws_ecr_repository" "ecr_repo" {
+  name                 = "test-repo"
+  image_tag_mutability = "IMMUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+
 resource "aws_ecs_service" "api_service" {
   name            = "api-service"
   cluster         = aws_ecs_cluster.testApp01.id
@@ -34,7 +43,7 @@ resource "aws_ecs_service" "api_service" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.service_target_group.arn
-    container_name   = "api-container"
+    container_name   = var.container_name
     container_port   = var.api_port
   }
   depends_on = [ aws_lb_listener.alb_default_listener_https ]

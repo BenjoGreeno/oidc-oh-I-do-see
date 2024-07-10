@@ -6,7 +6,22 @@ variable "ecs_cluster_name" {
   default = "testApp01-ecs-cluster"
 }
 
+variable "ecr-repo" {
+  description = "name of ecr repo"
+  type = string
+  default = "test-repo"
+  
+}
+
+variable "container_name" {
+  description = "container name the backend is running on"
+  type = string
+  default = "test-container"
+  
+}
+
 variable "vpc_cidr" {
+  description = "vpc subnet range"
   default = "10.0.0.0/16"
 }
 

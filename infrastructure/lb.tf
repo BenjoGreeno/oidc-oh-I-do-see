@@ -9,7 +9,7 @@ resource "aws_lb" "ecs_lb" {
 
 resource "aws_lb_target_group" "service_target_group" {
   name                 = "${var.app-stack}-TargetGroup-${var.environment}"
-  port                 = 80
+  port                 = var.api_port
   protocol             = "HTTP"
   target_type = "ip"
   vpc_id               = aws_vpc.testApp01-vpc.id

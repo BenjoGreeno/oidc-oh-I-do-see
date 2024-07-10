@@ -1,7 +1,3 @@
-# #creating OAI :
-# resource "aws_cloudfront_origin_access_identity" "oai-cloudfront" {
-#   comment = "OAI for ${var.domain}"
-# }
 
 resource "aws_cloudfront_origin_access_control" "testApp01" {
   name                              = "${var.app-stack}"

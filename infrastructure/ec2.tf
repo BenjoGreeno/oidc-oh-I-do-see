@@ -56,7 +56,7 @@ resource "aws_autoscaling_group" "ecs_instances" {
   }
 
   tag {
-    key                 = "Name"
+    key                 = var.ecs_cluster_name
     value               = "ECS Instance"
     propagate_at_launch = true
   }

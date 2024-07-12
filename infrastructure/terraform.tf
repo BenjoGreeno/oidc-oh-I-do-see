@@ -5,7 +5,7 @@ terraform {
       version = "5.57.0"
     }
   }
-    cloud {
+  cloud {
     organization = "benjo-learns"
 
     workspaces {

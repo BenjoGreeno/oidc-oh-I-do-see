@@ -10,6 +10,9 @@ jobs:
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./infrastructure
     permissions:
       pull-requests: write
     steps:
@@ -24,22 +27,18 @@ jobs:
 
       - name: Terraform Format
         id: fmt
-        working-directory: infrastructure
         run: terraform fmt -check
 
       - name: Terraform Init
         id: init
-        working-directory: infrastructure
         run: terraform init
       
       - name: Terraform Validate
         id: validate
-        working-directory: infrastructure
         run: terraform validate -no-color
 
       - name: Terraform Plan
         id: plan
-        working-directory: infrastructure
         if: github.event_name == 'pull_request'
         run: terraform plan -no-color -input=false
         continue-on-error: true

@@ -7,7 +7,7 @@ I've made a bunch of further changes & tidy up, however some important notes:
 - made some SG changes as I think missed a few things
 - I had public IP's where there shouldn't have been any
 
-### 2024-07-03
+### 2024-07-04
 - some tidy up
 - added versioning to the bucket
 - some work on the SG comms between the lb and ecs.

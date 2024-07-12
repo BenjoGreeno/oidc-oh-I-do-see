@@ -5,6 +5,13 @@ terraform {
       version = "5.57.0"
     }
   }
+    cloud {
+    organization = "benjo-learns"
+
+    workspaces {
+      name = "ECS-Mess"
+    }
+  }
 }
 
 provider "aws" {
@@ -23,12 +30,12 @@ provider "aws" {
   region = "us-east-1"
 }
 
-terraform {
-  cloud {
-    organization = "benjo-learns"
+# terraform {
+#   cloud {
+#     organization = "benjo-learns"
 
-    workspaces {
-      name = "ECS-Mess"
-    }
-  }
-}
+#     workspaces {
+#       name = "ECS-Mess"
+#     }
+#   }
+# }

@@ -8,21 +8,21 @@ variable "ecs_cluster_name" {
 
 variable "ecr-repo" {
   description = "name of ecr repo"
-  type = string
-  default = "test-repo"
-  
+  type        = string
+  default     = "test-repo"
+
 }
 
 variable "container_name" {
   description = "container name the backend is running on"
-  type = string
-  default = "test-container"
-  
+  type        = string
+  default     = "test-container"
+
 }
 
 variable "vpc_cidr" {
   description = "vpc subnet range"
-  default = "10.0.0.0/16"
+  default     = "10.0.0.0/16"
 }
 
 variable "public_subnet_cidr" {
@@ -48,14 +48,15 @@ variable "app-stack" {
 }
 
 variable "hosted_zone" {
-description = "this assumes you have a hosted zone set up, please provide it"
-  type    = string
+  description = "this assumes you have a hosted zone set up, please provide it"
+  type        = string
+  default     = "bengreen.xyz"
 }
 
 variable "domain_cloudfront" {
-description = "this will try and create an A record under the specified hosted zone"
-  type    = string
-  default = "hello-from.bengreen.xyz"
+  description = "this will try and create an A record under the specified hosted zone"
+  type        = string
+  default     = "hello-from.bengreen.xyz"
 }
 
 variable "domain_alb" {
@@ -113,6 +114,6 @@ variable "owner-email" {
 
 variable "image" {
   description = "docker image to test the back end"
-  type = string
-  default = "906273274991.dkr.ecr.eu-west-1.amazonaws.com/test-repo:fast-api-2024-07-03"
+  type        = string
+  default     = "906273274991.dkr.ecr.eu-west-1.amazonaws.com/test-repo:fast-api-2024-07-03"
 }

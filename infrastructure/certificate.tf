@@ -3,23 +3,23 @@
 # validate cert:
 resource "aws_acm_certificate" "wildcard-cloudfront" {
   domain_name               = var.domain_cloudfront
-  provider                = aws.cdn
+  provider                  = aws.cdn
   validation_method         = "DNS"
   subject_alternative_names = ["*.${var.domain_cloudfront}"]
-  
-lifecycle {
-create_before_destroy = true
-}
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_acm_certificate" "wildcard-backend" {
   domain_name               = var.domain_alb
   validation_method         = "DNS"
   subject_alternative_names = ["*.${var.domain_alb}"]
-  
-lifecycle {
-create_before_destroy = true
-}
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_route53_record" "cert-validation-cloudfront" {
@@ -50,8 +50,8 @@ resource "aws_acm_certificate" "wildcard-lb" {
   validation_method         = "DNS"
   subject_alternative_names = ["*.${var.domain_alb}"]
   lifecycle {
-create_before_destroy = true
-}
+    create_before_destroy = true
+  }
 }
 
 resource "aws_route53_record" "cert-validation-lb" {

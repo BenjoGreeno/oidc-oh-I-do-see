@@ -1,9 +1,9 @@
 resource "aws_lb" "ecs_lb" {
-  name               = "ecs-lb"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = aws_subnet.public[*].id
+  name                             = "ecs-lb"
+  internal                         = false
+  load_balancer_type               = "application"
+  security_groups                  = [aws_security_group.lb_sg.id]
+  subnets                          = aws_subnet.public[*].id
   enable_cross_zone_load_balancing = "true"
 }
 
@@ -11,7 +11,7 @@ resource "aws_lb_target_group" "service_target_group" {
   name                 = "${var.app-stack}-TargetGroup-${var.environment}"
   port                 = var.api_port
   protocol             = "HTTP"
-  target_type = "ip"
+  target_type          = "ip"
   vpc_id               = aws_vpc.testApp01-vpc.id
   deregistration_delay = 5
 

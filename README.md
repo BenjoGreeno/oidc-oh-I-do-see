@@ -1,6 +1,6 @@
 # This is a mess.
 
-Edit: I've been making some changes, which you can see as per the changelog doc, or the PR merges, so spme of the below may have changed
+Edit: I've been making some changes, which you can see as per the changelog doc, or the PR merges, so some of the below may have changed
 
 This is regrettably a mess/sub par/a work in progress. I'm messing with terraform and github actions, building a basic front end that is supposed to speak to a back end. The front end deploys and with Cloudfront (hurray), however I don't have much experience in calling API's, much to my detriment. He's some detail
 

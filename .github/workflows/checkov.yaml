@@ -3,6 +3,8 @@ name: checkov
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main", "master" ]
   pull_request:
     branches: [ "main", "master" ]
 
@@ -24,7 +26,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so follow-up steps can access it
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
       - name: Checkov GitHub Action
         uses: bridgecrewio/checkov-action@v12
@@ -34,7 +36,7 @@ jobs:
           output_file_path: console,results.sarif
         
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v2
         
         # Results are generated only on a success or failure
         # this is required since GitHub by default won't run the next step

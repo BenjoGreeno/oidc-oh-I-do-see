@@ -52,6 +52,16 @@ resource "aws_security_group" "lb_sg" {
 
 }
 
+resource "aws_security_group_rule" "ecs_egress" {
+  security_group_id = aws_security_group.ecs_sg.id
+  description       = "Allow all egress from ECS tasks"
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+
 data "aws_ec2_managed_prefix_list" "cloudfront" {
   name = "com.amazonaws.global.cloudfront.origin-facing"
 }
@@ -107,6 +117,23 @@ resource "aws_route_table_association" "public_subnet_assoc" {
   count          = var.az_count
   subnet_id      = element(aws_subnet.public[*].id, count.index)
   route_table_id = aws_route_table.internet-access-rt.id
+}
+
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.testApp01-vpc.id
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gateway[0].id
+  }
+    tags = {
+    Name = "${var.app-stack}_PrivateRT_${count.index}_${var.environment}"
+  }
+}
+
+resource "aws_route_table_association" "private_subnet_association" {
+  count = var.az_count
+  subnet_id = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private[count.index].id
 }
 
 resource "aws_nat_gateway" "nat_gateway" {

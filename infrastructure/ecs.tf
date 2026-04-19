@@ -1,5 +1,19 @@
 resource "aws_ecs_cluster" "testApp01" {
   name = var.ecs_cluster_name
+
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
+}
+
+resource "aws_cloudwatch_log_group" "ecs_api" {
+  name              = "/ecs/${var.app-stack}/api"
+  retention_in_days = 30
+
+  tags = {
+    Name = "${var.app-stack}-api-logs"
+  }
 }
 
 resource "aws_ecs_task_definition" "api" {
@@ -8,6 +22,7 @@ resource "aws_ecs_task_definition" "api" {
   requires_compatibilities = ["EC2"]
   cpu                      = "256"
   memory                   = "512"
+  execution_role_arn       = aws_iam_role.ecs_task_execution_role.arn
 
   container_definitions = jsonencode([
     {
@@ -21,6 +36,15 @@ resource "aws_ecs_task_definition" "api" {
           hostPort      = var.api_port
         }
       ]
+
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group"         = "/ecs/${var.app-stack}/api"
+          "awslogs-region"        = var.region
+          "awslogs-stream-prefix" = "api"
+        }
+      }
     }
   ])
 }
@@ -32,8 +56,27 @@ resource "aws_ecr_repository" "ecr_repo" {
   image_scanning_configuration {
     scan_on_push = true
   }
+  encryption_configuration {
+    encryption_type = "KMS"
+  }
 }
 
+resource "aws_ecr_lifecycle_policy" "name" {
+  repository = aws_ecr_repository.ecr_repo.name
+  policy     = file("${path.module}/../api/policy.json")
+}
+
+resource "aws_ecr_registry_scanning_configuration" "scan_configuration" {
+  scan_type = "ENHANCED"
+
+  rule {
+    scan_frequency = "CONTINUOUS_SCAN"
+    repository_filter {
+      filter      = "*"
+      filter_type = "WILDCARD"
+    }
+  }
+}
 resource "aws_ecs_service" "api_service" {
   name            = "api-service"
   cluster         = aws_ecs_cluster.testApp01.id

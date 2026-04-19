@@ -1,10 +1,51 @@
 name: "Terraform"
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
+  workflow_dispatch:
+    inputs:
+      path_to_dockerfile:
+        description: Path to the dockerfile (default = 'Dockerfile')
+        default: "api/Dockerfile"
+        type: string
+      docker_build_dir:
+        description: Docker build directory (default = '.')
+        default: "e2e-test"
+        type: string
+      image_tag:
+        description: Tag to apply to images.
+        type: string
+        default: snapshot-artifact
+      lifecycle_policy_file:
+        description: Path to the lifecycle policy JSON file (default = 'policy.json')
+        default: "api/policy.json"
+        type: string
+      # backend_s3_bucket:
+      #   description: Name of the S3bucket for Terraform backend
+      #   default: "terraform-backend-primary-region"
+      #   type: string
+      # backend_iam_role:
+      #   description: Name of the Terraform backend assumable IAM Role
+      #   default: "workload-assumable-role"
+      #   type: string
+      github_iam_role:
+        description: Name of the IAM Role for adding access to ECR repo
+        default: ${{ secrets.GITHUB_TOKEN }}
+        type: string
+      aws_account_id:
+        description: AWS Account ID
+        type: string
+      aws_region:
+        description: Target AWS Region
+        default: "eu-west-1"
+        type: string
+      # backend_dynamodb_table:
+      #   description: DynamoDB table for State lock
+      #   default: "terraform-backend-ddb"
+      #   type: string
+  # push:
+  #   branches:
+  #     - main
+  # pull_request:
 
 jobs:
   terraform:

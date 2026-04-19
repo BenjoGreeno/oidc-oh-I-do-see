@@ -99,6 +99,14 @@ resource "aws_security_group" "ecs_sg" {
     security_groups = [aws_security_group.lb_sg.id]
   }
 
+  egress {
+    description = "Allow all outbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
 }
 
 resource "aws_internet_gateway" "internet-gw" {
@@ -148,6 +156,27 @@ resource "aws_nat_gateway" "nat_gateway" {
 
 resource "aws_eip" "nat_gateway" {
   count = var.az_count
+}
+
+# Route tables for private subnets through NAT gateways
+resource "aws_route_table" "private" {
+  count  = var.az_count
+  vpc_id = aws_vpc.testApp01-vpc.id
+
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat_gateway[count.index].id
+  }
+
+  tags = {
+    Name = "${var.app-stack}_PrivateRT_${count.index}_${var.environment}"
+  }
+}
+
+resource "aws_route_table_association" "private_subnet_assoc" {
+  count          = var.az_count
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private[count.index].id
 }
 
 
